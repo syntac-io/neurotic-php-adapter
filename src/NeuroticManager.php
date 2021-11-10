@@ -30,8 +30,8 @@ class NeuroticManager
 	 */
 	public function __construct(string $token = null, string $url = null)
 	{
-		$this->token = $token ?? config('neurotic::neurotic.token');
-		$this->url = $url ?? config('neurotic::neurotic.url');
+		$this->token = $token ?? config('neurotic.token');
+		$this->url = $url ?? config('neurotic.url');
 
 		abort_if(empty($this->token), 400, __('neurotic::neurotic.token_not_configurated'));
 		abort_if(empty($this->url), 400, __('neurotic::neurotic.url_not_configurated'));
