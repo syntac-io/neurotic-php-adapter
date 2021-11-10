@@ -46,17 +46,59 @@ class NeuroticManager
 	}
 
 	/**
-	 * Get content types.
+	 * Get all content types.
 	 * 
 	 * @return mixed
 	 */
-	public function contentTypes()
+	public function getContentTypes()
 	{
 		$payload = $this->http
 			->get('content_types')
 			->getBody()
 			->getContents();
 
-		return collect(json_decode($payload));
+		return json_decode($payload);
+	}
+
+	/**
+	 * Get content type by identifier.
+	 * 
+	 * @param string $identifier
+	 * @return mixed|static
+	 */
+	public function getContentType(string $identifier)
+	{
+		$payload = $this->http
+			->get('content_types/' . $identifier)
+			->getBody()
+			->getContents();
+
+		return json_decode($payload);
+	}
+
+	/**
+	 * Get all or specific content.
+	 * 
+	 * @param string $contentTypeID
+	 * @param null|string $contentID
+	 * @return mixed|static
+	 */
+	public function getContent(string $contentTypeID, string $contentID = null)
+	{
+		if ($contentID) {
+			$payload = $this->http
+				->get('content_types/' . $contentTypeID . '/content/' . $contentID)
+				->getBody()
+				->getContents();
+
+			return json_decode($payload);
+		}
+
+		$payload = $this->http
+			->get('content_types/' . $contentTypeID . '/content')
+			->getBody()
+			->getContents();
+
+		return json_decode($payload);
 	}
 }
