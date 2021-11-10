@@ -14,7 +14,6 @@ class NeuroticServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->app->bind('neurotic-manager', fn () => new NeuroticManager);
-		$this->mergeConfigFrom(__DIR__ . '/../config/neurotic.php', 'neurotic');
 	}
 
 	/**
@@ -24,6 +23,10 @@ class NeuroticServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
+		$this->publishes([
+			__DIR__ . '/../config/neurotic.php' => config_path('neurotic.php'),
+		]);
+
 		$this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'neurotic');
 	}
 }
