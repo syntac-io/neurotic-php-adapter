@@ -48,7 +48,7 @@ class NeuroticManager
 	/**
 	 * Get all content types.
 	 * 
-	 * @return mixed
+	 * @return array
 	 */
 	public function getContentTypes()
 	{
@@ -57,14 +57,14 @@ class NeuroticManager
 			->getBody()
 			->getContents();
 
-		return json_decode($payload);
+		return json_decode($payload, true);
 	}
 
 	/**
 	 * Get content type by identifier.
 	 * 
 	 * @param string $identifier
-	 * @return mixed|static
+	 * @return array
 	 */
 	public function getContentType(string $identifier)
 	{
@@ -73,7 +73,7 @@ class NeuroticManager
 			->getBody()
 			->getContents();
 
-		return json_decode($payload);
+		return json_decode($payload, true);
 	}
 
 	/**
@@ -81,7 +81,7 @@ class NeuroticManager
 	 * 
 	 * @param string $contentTypeID
 	 * @param null|mixed $contentIDs
-	 * @return mixed|static
+	 * @return array
 	 */
 	public function getContent(string $contentTypeID, $contentIDs = null)
 	{
@@ -93,7 +93,7 @@ class NeuroticManager
 				->getBody()
 				->getContents();
 
-			return json_decode($payload);
+			return json_decode($payload, true);
 		}
 
 		$payload = $this->http
@@ -101,6 +101,6 @@ class NeuroticManager
 			->getBody()
 			->getContents();
 
-		return json_decode($payload);
+		return json_decode($payload, true);
 	}
 }
