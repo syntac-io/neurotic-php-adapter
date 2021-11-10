@@ -1,0 +1,34 @@
+{
+	"name": "syntac-io/neurotic-php-adapter",
+	"description": "PHP adapter for Neurotic manager.",
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Jóhannes Rónaldsson",
+			"email": "johannes@syntac.io"
+		}
+	],
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"require": {
+		"php": "^7.4",
+		"illuminate/support": "8.x-dev",
+		"guzzlehttp/guzzle": "^7.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"Syntac\\Neurotic\\": "src/"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Syntac\\Neurotic\\NeuroticServiceProvider"
+			],
+			"aliases": {
+				"NeuroticManager": "Syntac\\Neurotic\\NeuroticManagerFacade"
+			}
+		}
+	}
+}
