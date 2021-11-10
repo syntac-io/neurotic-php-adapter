@@ -57,6 +57,6 @@ class NeuroticManager
 			->getBody()
 			->getContents();
 
-		return collect($payload);
+		return collect(json_decode($payload));
 	}
 }
