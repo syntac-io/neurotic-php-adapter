@@ -7,14 +7,14 @@ use GuzzleHttp\Client as GuzzleHTTPClient;
 class NeuroticManager
 {
 	/**
-	 * @var string
+	 * @var null|string
 	 */
-	protected string $token = '';
+	protected ?string $token;
 	
 	/**
-	 * @var string
+	 * @var null|string
 	 */
-	protected string $url = '';
+	protected ?string $url;
 
 	/**
 	 * @var \GuzzleHttp\Client
