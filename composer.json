@@ -13,7 +13,7 @@
 	"prefer-stable": true,
 	"require": {
 		"php": "^7.4",
-		"illuminate/support": "8.x-dev",
+		"illuminate/support": "^8.0",
 		"guzzlehttp/guzzle": "^7.4"
 	},
 	"autoload": {
