@@ -37,7 +37,7 @@ class NeuroticManager
 		abort_if(empty($this->url), 400, __('neurotic::neurotic.url_not_configurated'));
 
 		$this->http = new GuzzleHTTPClient([
-			'base_uri' => $this->url . '/api',
+			'base_uri' => $this->url . '/api/',
 			'headers' => [
 				'x-api-token' => $this->token,
 			],
