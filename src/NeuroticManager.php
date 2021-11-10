@@ -80,14 +80,16 @@ class NeuroticManager
 	 * Get all or specific content.
 	 * 
 	 * @param string $contentTypeID
-	 * @param null|string $contentID
+	 * @param null|mixed $contentIDs
 	 * @return mixed|static
 	 */
-	public function getContent(string $contentTypeID, string $contentID = null)
+	public function getContent(string $contentTypeID, $contentIDs = null)
 	{
-		if ($contentID) {
+		$contentIDs = is_array($contentIDs) ? $contentIDs : [(string) $contentIDs];
+
+		if ($contentIDs) {
 			$payload = $this->http
-				->get('content_types/' . $contentTypeID . '/content/' . $contentID)
+				->get('content_types/' . $contentTypeID . '/content/' . implode(',', $contentIDs))
 				->getBody()
 				->getContents();
 
