@@ -37,8 +37,9 @@ class NeuroticManager
 		abort_if(empty($this->url), 400, __('neurotic::neurotic.url_not_configurated'));
 
 		$this->http = new GuzzleHTTPClient([
-			'base_uri' => $this->url . '/api/',
+			'base_uri' => $url . '/api/',
 			'headers' => [
+				'Accept' => 'application/json',
 				'x-api-token' => $this->token,
 			],
 		]);
@@ -52,7 +53,7 @@ class NeuroticManager
 	public function contentTypes()
 	{
 		$payload = $this->http
-			->get('/content_types')
+			->get('content_types')
 			->getBody()
 			->getContents();
 
