@@ -80,24 +80,34 @@ class NeuroticManager
 	 * Get all or specific content.
 	 * 
 	 * @param string $contentTypeID
-	 * @param null|mixed $contentIDs
+	 * @param null|string|array $constraint
 	 * @return array
 	 */
-	public function getContent(string $contentTypeID, $contentIDs = null)
+	public function getContent(string $contentTypeID, $constraint = null)
 	{
-		$contentIDs = is_array($contentIDs) ? $contentIDs : [(string) $contentIDs];
-
-		if ($contentIDs) {
+		// Get all content associated with content type.
+		if (!$constraint) {
 			$payload = $this->http
-				->get('content_types/' . $contentTypeID . '/content/' . implode(',', $contentIDs))
+				->get('content_types/' . $contentTypeID)
 				->getBody()
 				->getContents();
 
 			return json_decode($payload, true);
 		}
 
+		// Get all content associated with content type with constrains applied.
+		if (is_array($constraint)) {
+			$payload = $this->http
+				->get('content_types/' . $contentTypeID . '/content?where=' . json_encode($constraint))
+				->getBody()
+				->getContents();
+
+			return json_decode($payload, true);
+		}
+
+		// Get content associated with identifier and content type.
 		$payload = $this->http
-			->get('content_types/' . $contentTypeID . '/content')
+			->get('content_types/' . $contentTypeID . '/content/' . $constraint)
 			->getBody()
 			->getContents();
 
