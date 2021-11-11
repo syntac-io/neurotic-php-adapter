@@ -52,10 +52,14 @@ class NeuroticManager
 	 */
 	public function getContentTypes()
 	{
-		$payload = $this->http
-			->get('content_types')
-			->getBody()
-			->getContents();
+		try {
+			$payload = $this->http
+				->get('content_types')
+				->getBody()
+				->getContents();
+		} catch(\Throwable $e) {
+			return [];
+		}
 
 		return json_decode($payload, true);
 	}
@@ -68,10 +72,14 @@ class NeuroticManager
 	 */
 	public function getContentType(string $identifier)
 	{
-		$payload = $this->http
-			->get('content_types/' . $identifier)
-			->getBody()
-			->getContents();
+		try {
+			$payload = $this->http
+				->get('content_types/' . $identifier)
+				->getBody()
+				->getContents();
+		} catch(\Throwable $e) {
+			return [];
+		}
 
 		return json_decode($payload, true);
 	}
@@ -87,29 +95,41 @@ class NeuroticManager
 	{
 		// Get all content associated with content type.
 		if (!$constraint) {
-			$payload = $this->http
-				->get('content_types/' . $contentTypeID)
-				->getBody()
-				->getContents();
+			try {
+				$payload = $this->http
+					->get('content_types/' . $contentTypeID)
+					->getBody()
+					->getContents();
+			} catch(\Throwable $e) {
+				return [];
+			}
 
 			return json_decode($payload, true);
 		}
 
 		// Get all content associated with content type with constrains applied.
 		if (is_array($constraint)) {
-			$payload = $this->http
-				->get('content_types/' . $contentTypeID . '/content?where=' . json_encode($constraint))
-				->getBody()
-				->getContents();
+			try {
+				$payload = $this->http
+					->get('content_types/' . $contentTypeID . '/content?where=' . json_encode($constraint))
+					->getBody()
+					->getContents();
+			} catch(\Throwable $e) {
+				return [];
+			}
 
 			return json_decode($payload, true);
 		}
 
 		// Get content associated with identifier and content type.
-		$payload = $this->http
-			->get('content_types/' . $contentTypeID . '/content/' . $constraint)
-			->getBody()
-			->getContents();
+		try {
+			$payload = $this->http
+				->get('content_types/' . $contentTypeID . '/content/' . $constraint)
+				->getBody()
+				->getContents();
+		} catch(\Throwable $e) {
+			return [];
+		}
 
 		return json_decode($payload, true);
 	}
