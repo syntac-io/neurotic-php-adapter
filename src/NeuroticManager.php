@@ -91,13 +91,13 @@ class NeuroticManager
 	 * @param null|string|array $constraint
 	 * @return array
 	 */
-	public function getContent(string $contentTypeID, $constraint = null)
+	public function getContent(string $contentTypeID, $constraints = null)
 	{
 		// Get all content associated with content type.
-		if (!$constraint) {
+		if (!$constraints) {
 			try {
 				$payload = $this->http
-					->get('content_types/' . $contentTypeID)
+					->get('content_types/' . $contentTypeID . '/content')
 					->getBody()
 					->getContents();
 			} catch(\Throwable $e) {
@@ -108,10 +108,10 @@ class NeuroticManager
 		}
 
 		// Get all content associated with content type with constrains applied.
-		if (is_array($constraint)) {
+		if (is_array($constraints)) {
 			try {
 				$payload = $this->http
-					->get('content_types/' . $contentTypeID . '/content?where=' . json_encode($constraint))
+					->get('content_types/' . $contentTypeID . '/content?where=' . json_encode($constraints))
 					->getBody()
 					->getContents();
 			} catch(\Throwable $e) {
@@ -124,7 +124,7 @@ class NeuroticManager
 		// Get content associated with identifier and content type.
 		try {
 			$payload = $this->http
-				->get('content_types/' . $contentTypeID . '/content/' . $constraint)
+				->get('content_types/' . $contentTypeID . '/content/' . $constraints)
 				->getBody()
 				->getContents();
 		} catch(\Throwable $e) {
