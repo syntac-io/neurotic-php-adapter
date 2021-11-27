@@ -28,5 +28,11 @@ class NeuroticServiceProvider extends ServiceProvider
 		]);
 
 		$this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'neurotic');
+
+		if ($this->app->runningInConsole()) {
+			$this->commands([
+				SyncCommand::class,
+			]);
+		}
 	}
 }
