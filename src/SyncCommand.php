@@ -30,7 +30,10 @@ class SyncCommand extends Command
     {
         $baseDir = storage_path('neurotic');
 
-		rmdir($baseDir);
+		if (is_dir($baseDir)) {
+			rmdir($baseDir);
+		}
+		
 		mkdir($baseDir);
 
 		foreach ($manager->getContentTypes() as $contentType) {
