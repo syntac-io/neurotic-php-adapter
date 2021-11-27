@@ -38,18 +38,10 @@ class SyncCommand extends Command
 
 		foreach ($manager->getContentTypes()['items'] as $contentTypeIdentifier => $contentType) {
 			$contentTypePath = $baseDir . '/' . $contentTypeIdentifier . '.json';
+			$content = $manager->getContent($contentTypeIdentifier)['items'];
+
 			touch($contentTypePath);
-			file_put_contents($contentTypePath, json_encode($contentType));
-
-			if (!is_dir($dir = $baseDir . '/' . $contentTypeIdentifier)) {
-				mkdir($dir);
-			}
-
-			foreach ($manager->getContent($contentTypeIdentifier)['items'] as $itemIdentifier => $item) {
-				$itemPath = $dir . '/' . $itemIdentifier . '.json';
-				touch($itemPath);
-				file_put_contents($itemPath, json_encode($item));
-			}
+			file_put_contents($contentTypePath, json_encode($content));
 		}
     }
 }
