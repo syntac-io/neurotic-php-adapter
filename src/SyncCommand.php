@@ -3,6 +3,7 @@
 namespace Syntac\Neurotic;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 
 class SyncCommand extends Command
 {
@@ -18,7 +19,7 @@ class SyncCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Sync all content types and published content.';
+    protected $description = 'Sync all published content.';
 
     /**
      * Execute the console command.
@@ -28,10 +29,8 @@ class SyncCommand extends Command
      */
     public function handle(NeuroticManager $manager)
     {
-        $baseDir = storage_path('neurotic');
-
-		if (is_dir($baseDir)) {
-			rmdir($baseDir);
+        if (is_dir($baseDir = storage_path('neurotic'))) {
+			File::deleteDirectory($baseDir);
 		}
 
 		mkdir($baseDir);
@@ -39,7 +38,6 @@ class SyncCommand extends Command
 		foreach ($manager->getContentTypes()['items'] as $contentTypeIdentifier => $contentType) {
 			$contentTypePath = $baseDir . '/' . $contentTypeIdentifier . '.json';
 			$content = $manager->getContent($contentTypeIdentifier)['items'];
-
 			touch($contentTypePath);
 			file_put_contents($contentTypePath, json_encode($content));
 		}
