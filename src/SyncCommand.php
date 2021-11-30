@@ -4,6 +4,7 @@ namespace Syntac\Neurotic;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class SyncCommand extends Command
 {
@@ -36,7 +37,7 @@ class SyncCommand extends Command
 		mkdir($baseDir);
 
 		foreach ($manager->getContentTypes()['items'] as $contentTypeIdentifier => $contentType) {
-			$contentTypePath = $baseDir . '/' . $contentTypeIdentifier . '.json';
+			$contentTypePath = $baseDir . '/' . Str::plural($contentTypeIdentifier) . '.json';
 			$content = $manager->getContent($contentTypeIdentifier)['items'];
 			touch($contentTypePath);
 			file_put_contents($contentTypePath, json_encode($content));
